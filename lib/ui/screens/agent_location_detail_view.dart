@@ -64,7 +64,7 @@ class _FullLocationDetailsBody extends StatelessWidget {
           ),
         ),
         SizedBox(height: 20.h),
-        horizontalLine(),
+        const CustomDivider(),
         SizedBox(height: 20.h),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -118,8 +118,15 @@ class _FullLocationDetailsBody extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget horizontalLine() {
+class CustomDivider extends StatelessWidget {
+  const CustomDivider({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 1.h,
       width: 375.w,
@@ -133,21 +140,27 @@ class AgentLocationSummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const _Title(),
-        SizedBox(height: 5.h),
-        const _Address(),
-        SizedBox(height: 5.h),
-        Row(
-          children: const [
-            _Rating(),
-            Spacer(),
-            _PhoneNumber(),
-          ],
-        ),
-      ],
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+        showFullLocationDetailsBottomSheet(context);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _Title(),
+          SizedBox(height: 5.h),
+          const _Address(),
+          SizedBox(height: 5.h),
+          Row(
+            children: const [
+              _Rating(),
+              Spacer(),
+              _PhoneNumber(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

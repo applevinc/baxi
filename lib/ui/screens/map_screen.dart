@@ -46,9 +46,7 @@ class MapScreen extends StatelessWidget {
           size: 30.sp,
         ),
         onPressed: () {
-          //showSelectedSearchResultBottomSheet(context);
-          // showLocationAccessDialog(context);
-          showFullLocationDetailsBottomSheet(context);
+          showLocationAccessDialog(context);
         },
       ),
     );
@@ -88,7 +86,10 @@ class LocationAccessDialog extends StatelessWidget {
         SizedBox(height: 15.h),
         AppButton(
           label: 'TURN ON MY LOCATION',
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            showAgentsNearLocationBottomSheet(context);
+          },
         ),
         SizedBox(height: 15.h),
         AppButton(
@@ -130,7 +131,46 @@ Future<dynamic> showSelectedSearchResultBottomSheet(BuildContext context) {
         SizedBox(height: 17.5.h),
         AppButton(
           label: 'VIEW MORE',
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+            showFullLocationDetailsBottomSheet(context);
+          },
+        ),
+        SizedBox(height: 14.h),
+      ],
+    ),
+  );
+}
+
+Future<dynamic> showAgentsNearLocationBottomSheet(BuildContext context) {
+  return showCustomBottomSheet(
+    context: context,
+    child: BottomsheetBody(
+      content: [
+        const Dragger(),
+        SizedBox(height: 36.h),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Baxi agents near you',
+            style: AppText.bold400(context).copyWith(
+              fontSize: 16.sp,
+            ),
+          ),
+        ),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.only(top: 32.h, bottom: 20.h),
+              child: const AgentLocationSummaryView(),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const CustomDivider();
+          },
         ),
         SizedBox(height: 14.h),
       ],
